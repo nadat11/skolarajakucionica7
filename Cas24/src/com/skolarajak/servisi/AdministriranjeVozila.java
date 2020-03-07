@@ -5,7 +5,7 @@ import java.util.List;
 import com.skolarajak.model.Vozilo;
 import com.skolarajak.utils.Konstante;
 
-public class GenerisiVozila {
+public class AdministriranjeVozila {
 	private static final boolean STATUS=true;
 	
 	public List<Vozilo> generisi(){
@@ -17,6 +17,9 @@ public class GenerisiVozila {
 			vozila.add(vozilo);
 		}
 		return vozila;
+	}
+	public List<Vozilo> euro3Vozila(List<Vozilo> vozila){
+		return null;
 	}
 
 }
