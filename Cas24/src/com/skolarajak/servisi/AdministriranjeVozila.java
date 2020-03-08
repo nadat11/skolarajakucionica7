@@ -31,10 +31,13 @@ public class AdministriranjeVozila {
 	public List<Vozilo> euro3Vozila(List<Vozilo> vozila) { // pocetna lista sadrzi sva vozila
 		/*
 		 * List<Vozilo> euro3Vozila = new ArrayList<Vozilo>(); // filtrirana privremena
-		 * lista rezultata samo euro 3 vozila for(Vozilo vozilo : vozila) { // proveri
-		 * elemente u listi if(vozilo.getGodisteProizvodnje() >=
-		 * Konstante.EURO_3_GODISTE) { // ako odgovara uslovu euro3Vozila.add(vozilo);
-		 * // dodaje se u privremenu listu euro 3 vozila } }
+		 *                                                        lista rezultata samo euro 3 vozila
+		 * for(Vozilo vozilo : vozila) { // proveri elemente u listi
+		 *  if(vozilo.getGodisteProizvodnje() >= Konstante.EURO_3_GODISTE) { // ako odgovara uslovu 
+		 *  euro3Vozila.add(vozilo);                                         dodaje se u privremenu listu euro 3 vozila 
+		 * //                                                               
+		 * }
+		 * }
 		 */
 
 		// Java 8 lambda izraz

@@ -22,9 +22,9 @@ public class App {
 		List<Vozilo> euro3Vozila = administracijaVozila.euro3Vozila(vozila); // izdvoji euro3 vozila
 		System.out.println(euro3Vozila.size());
 		izlistajVozila(euro3Vozila);
+		System.out.println("--------------------------------------------------");
 		
-		
-System.out.println("--------------------------------------------------");
+
 		
 		// izdvoj aktivna vozila
 
