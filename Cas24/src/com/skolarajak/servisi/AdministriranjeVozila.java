@@ -13,8 +13,8 @@ public class AdministriranjeVozila {
 	private static final double PRAG_RASPODELE_AKTIVNIH_VOZILA = (double) 0.4; // kontrolisemo da li hocemo da imamo
 	private static final int SLOVO_A = 65; // vise aktivnih i neaktivnih
 	private static final int SLOVO_Z = 90;
-	
-	private static final HashMap<String,String> registarskiBrojevi = new HashMap<String, String>();
+
+	private static final HashMap<String, String> registarskiBrojevi = new HashMap<String, String>();
 
 	public List<Vozilo> generisi() {
 		List<Vozilo> vozila = new ArrayList<Vozilo>();
@@ -28,19 +28,20 @@ public class AdministriranjeVozila {
 			vozilo.setRegistarskiBroj(kreirajRegistarskiBroj());
 			vozila.add(vozilo);
 		}
-		System.out.println("Ukupno registarskih brojeva: " + registarskiBrojevi.keySet().size()); // koliko ima registarskih brojeva u HashMapi
+		System.out.println("Ukupno registarskih brojeva: " + registarskiBrojevi.keySet().size()); // koliko ima
+																									// registarskih
+																									// brojeva u
+																									// HashMapi
 		return vozila;
 	}
 
 	public List<Vozilo> euro3Vozila(List<Vozilo> vozila) { // pocetna lista sadrzi sva vozila
 		/*
 		 * List<Vozilo> euro3Vozila = new ArrayList<Vozilo>(); // filtrirana privremena
-		 * 															lista rezultata samo euro 3 vozila
-		 * for(Vozilo vozilo : vozila) { // proveri elemente u listi											
-		 *  if(vozilo.getGodisteProizvodnje() >= Konstante.EURO_3_GODISTE) { // ako odgovara uslovu 
-		 *  euro3Vozila.add(vozilo);  //dodaje se u privremenu listu euro 3 vozila 
-		 *  } 
-		 *  }
+		 * lista rezultata samo euro 3 vozila for(Vozilo vozilo : vozila) { // proveri
+		 * elemente u listi if(vozilo.getGodisteProizvodnje() >=
+		 * Konstante.EURO_3_GODISTE) { // ako odgovara uslovu euro3Vozila.add(vozilo);
+		 * //dodaje se u privremenu listu euro 3 vozila } }
 		 */
 
 		// Java 8 lambda izraz
@@ -63,14 +64,12 @@ public class AdministriranjeVozila {
 //		}
 //		return aktivnaVozila;
 //	}
-	
-		List<Vozilo> aktivnaVozila = vozila.stream()
-				.filter(v -> v.isAktivno())
-				.collect(Collectors.toList());
-			return aktivnaVozila;
+
+		List<Vozilo> aktivnaVozila = vozila.stream().filter(v -> v.isAktivno()).collect(Collectors.toList());
+		return aktivnaVozila;
 	}
-	
-	// kreiranje jedinstvenog registarskog broja sa HashMapom 
+
+	// kreiranje jedinstvenog registarskog broja sa HashMapom
 	private String kreirajRegistarskiBroj() {
 //		String registarskiBroj ="Reg-" + slucajnoSlovo() + slucajnoSlovo();
 //		if (registarskiBrojevi.containsKey(registarskiBroj)) { // provera uslova da li registarski broj sadrzi key
@@ -79,26 +78,25 @@ public class AdministriranjeVozila {
 //		}
 //		registarskiBrojevi.put(registarskiBroj, registarskiBroj); // ako ne sadrzi kljuc onda je nov kljuc i stavljamo ga u mapu, metoda kada je uspesno uradjena regiBroj je ubacen u mapu
 //		return registarskiBroj;
-	
-	//	boolean isJedinstvenRegBroj = false;  // nije jedinstven broj
-		
-		
-		String registarskiBroj = "";  // deklaracija iza petlje da bi se uradio return statment
-		
-	//	while(!isJedinstvenRegBroj) {  // ako je jedinstven
-		while(1==1){ // 2 varijanta beskrajna petlja iz koje se izlazi ako nadjemo jedinstven broj
-			registarskiBroj ="Reg-" + slucajnoSlovo() + slucajnoSlovo(); // kreiramo registarski broj
+
+		// boolean isJedinstvenRegBroj = false; // nije jedinstven broj
+
+		String registarskiBroj = ""; // deklaracija iza petlje da bi se uradio return statment
+
+		// while(!isJedinstvenRegBroj) { // ako je jedinstven
+		while (1 == 1) { // 2 varijanta beskrajna petlja iz koje se izlazi ako nadjemo jedinstven broj
+			registarskiBroj = "Reg-" + slucajnoSlovo() + slucajnoSlovo(); // kreiramo registarski broj
 			if (!registarskiBrojevi.containsKey(registarskiBroj)) { // proverimo da li se ne nalazi u mapi
 				registarskiBrojevi.put(registarskiBroj, registarskiBroj); // ako nije u mapi dodajemo ga u mapu
-				//isJedinstvenRegBroj = true; // umesto break-a 
+				// isJedinstvenRegBroj = true; // umesto break-a
 				break;
 			} else {
 				System.out.println("*************DUPLICAT**************" + registarskiBroj);
 			}
 		}
-		return registarskiBroj; 
+		return registarskiBroj;
 	}
-	
+
 	private int dodeliGodinuProizvodnje() {
 //		int godina =(int) (Math.random()*(Konstante.MAX_VOZILO_GODISTE - Konstante.MIN_VOZILO_GODISTE + 1) 
 //				+ Konstante.MIN_VOZILO_GODISTE); //vraca slucajnu godinu izmadju 1960-2000
