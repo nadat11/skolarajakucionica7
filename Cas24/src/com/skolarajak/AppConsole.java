@@ -50,7 +50,7 @@ public class AppConsole {
 				break; // iz while petlje
 			}
 		}
-	}
+	} // izlaz iz main metode
 
 	private static void opcija0(List<Vozilo> vozila) {
 		System.out.println("========IZLISTAJ VOZILA=========");
