@@ -8,14 +8,7 @@ import com.skolarajak.model.Vozilo;
 import com.skolarajak.servisi.AdministriranjeVozila;
 
 public class AppConsole {
-	static final AdministriranjeVozila administracijaVozila = new AdministriranjeVozila(); // pretvoreno u staticku
-																							// metodu da bude vidljiva u
-																							// privatnim metodama za
-																							// euro2 i aktivna vozila i
-																							// na nivou je cele
-																							// aplikacije kada je
-																							// staticna
-
+	static final AdministriranjeVozila administracijaVozila = new AdministriranjeVozila(); 
 	public static void main(String[] args) {
 		Date datum = new Date();
 		System.out.println("Pocetak rada aplikacije: " + datum.toString());

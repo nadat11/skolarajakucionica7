@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.skolarajak.dao.VoziloInMemoryDAOImpl;
+import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vozilo;
 import com.skolarajak.utils.Konstante;
 import com.skolarajak.utils.RandomUtils;
@@ -28,6 +29,7 @@ public class AdministriranjeVozila {
 
 	public List<Vozilo> generisi() {
 		List<Vozilo> vozila = new ArrayList<Vozilo>();
+		try { // hvatamo sve greske
 		Vozilo zadnjeVozilo = null; // deklarisanje izvan petlje da bude vidljiva
 		for (int i = 0; i < Konstante.UKUPAN_BROJ_VOZILA_U_SISTEMU; i++) {
 			int godinaProizvodnje = dodeliGodinuProizvodnje();
@@ -42,14 +44,24 @@ public class AdministriranjeVozila {
 				+ voziloDAO.read(zadnjeVozilo.getRegistarskiBroj()).isAktivno());
 
 		zadnjeVozilo.setAktivno(!zadnjeVozilo.isAktivno()); // ako je aktivno promenimo status na negaciju neaktivno je
-		//zadnjeVozilo = voziloDAO.update(zadnjeVozilo);
+		zadnjeVozilo = voziloDAO.update(zadnjeVozilo);
 		System.out.println("Godina proizvodnje poslednjeg registrovanog: " + zadnjeVozilo.getRegistarskiBroj() + " : "
 				+ voziloDAO.read(zadnjeVozilo.getRegistarskiBroj()).isAktivno());
 		voziloDAO.delete(zadnjeVozilo.getRegistarskiBroj());
-		System.out.println("Godina proizvodnje poslednjeg registrovanog: " + zadnjeVozilo.getRegistarskiBroj() + " : "
-				+ voziloDAO.read(zadnjeVozilo.getRegistarskiBroj()).isAktivno());
-		return vozila; // citamo iz dao kljuc i pokazali godiste proizvodnje
-	}
+		
+			zadnjeVozilo = voziloDAO.read(zadnjeVozilo.getRegistarskiBroj());
+		} catch (ResultNotFoundException e) {  // hendlujemo sve greske
+			System.out.println("OBRISANO");
+			System.out.println(e.getMessage()); // iz konstruktora ResultNotFoundException
+		}
+	/*	if(zadnjeVozilo != null) {
+			System.out.println("Godina proizvodnje poslednjeg registrovanog: " + zadnjeVozilo.getRegistarskiBroj() + " : "
+					+ zadnjeVozilo.isAktivno());
+		} else {
+			System.out.println("OBRISANO");
+		}*/ //null check
+		return vozila; // citamo iz dao  kljuc ali ne postoji objekat jer smo ga obrisali null point exeption
+	} // moramo eksplicitno da ga proverimo da li je null, ili da bacimo exepption i da ga hvatamo i procesiramo
 
 	public List<Vozilo> euro3Vozila(List<Vozilo> vozila) { // pocetna lista sadrzi sva vozila
 
