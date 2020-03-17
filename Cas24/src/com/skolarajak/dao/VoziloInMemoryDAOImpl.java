@@ -1,6 +1,8 @@
 package com.skolarajak.dao;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vozilo;
@@ -9,7 +11,8 @@ import com.skolarajak.utils.RandomUtils;
 // interfejs vezuje DAO za nivo iznad 
 
 public class VoziloInMemoryDAOImpl implements VoziloInMemoryDAO {
-	private static final HashMap<String, Vozilo> registrovanaVozila = new HashMap<String, Vozilo>(); // data storage je hash map
+	private static final HashMap<String, Vozilo> registrovanaVozila = new HashMap<String, Vozilo>(); // data storage je
+																										// hash map
 
 	@Override
 	public Vozilo create(Vozilo vozilo) {
@@ -21,8 +24,8 @@ public class VoziloInMemoryDAOImpl implements VoziloInMemoryDAO {
 
 	@Override
 	public Vozilo read(String registarskiBroj) throws ResultNotFoundException {
-		Vozilo vozilo = registrovanaVozila.get(registarskiBroj); // procitali smo vozilo 
-		if( vozilo == null) { // proverili smo da li je null izbacili smo izuzetak ili 
+		Vozilo vozilo = registrovanaVozila.get(registarskiBroj); // procitali smo vozilo
+		if (vozilo == null) { // proverili smo da li je null izbacili smo izuzetak ili
 			throw new ResultNotFoundException("Objekat nije prodnadjen");
 		}
 		return vozilo; // smo vratili vozilo ako nije null
@@ -31,7 +34,8 @@ public class VoziloInMemoryDAOImpl implements VoziloInMemoryDAO {
 	@Override
 	public Vozilo update(Vozilo vozilo) {
 		registrovanaVozila.put(vozilo.getRegistarskiBroj(), vozilo); // upis u bazu
-		// vozilo = read(vozilo.getRegistarskiBroj()); //ako bi imali bazu, polja koja su promenjena citao bi DAO i moramo da doadamo read, ne objekta vec polja
+		// vozilo = read(vozilo.getRegistarskiBroj()); //ako bi imali bazu, polja koja
+		// su promenjena citao bi DAO i moramo da doadamo read, ne objekta vec polja
 		return vozilo;
 	}
 
@@ -62,6 +66,27 @@ public class VoziloInMemoryDAOImpl implements VoziloInMemoryDAO {
 	@Override
 	public long count() {
 		return VoziloInMemoryDAOImpl.registrovanaVozila.keySet().size();
+	}
+
+	@Override
+	public List<Vozilo> getAll() throws ResultNotFoundException { // getAll se kroisti iz servisa
+		return VoziloInMemoryDAOImpl.registrovanaVozila.values() // mapa daj vrednosti ali te vrednosti su kolekcija
+				.stream().collect(Collectors.toList()); // kolekciju smo prebacili u stream, pa smo kolekciju vratili u
+														// listu
+	}
+
+	@Override
+	public List<Vozilo> getEuro3Vozila() {
+		// TODO Auto-generated method stub
+		return VoziloInMemoryDAOImpl.registrovanaVozila.values().stream() // stream sadrzi listu vozila
+				.filter(v -> v.getGodisteProizvodnje() >= 2000).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Vozilo> getAktivnaVozila() {
+		// TODO Auto-generated method stub
+		return VoziloInMemoryDAOImpl.registrovanaVozila.values().stream() 
+				.filter(v -> v.isAktivno()).collect(Collectors.toList());
 	}
 
 }

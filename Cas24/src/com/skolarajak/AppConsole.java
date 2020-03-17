@@ -4,18 +4,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vozilo;
 import com.skolarajak.servisi.AdministriranjeVozila;
 
 public class AppConsole {
 	static final AdministriranjeVozila administracijaVozila = new AdministriranjeVozila(); 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ResultNotFoundException {
 		Date datum = new Date();
 		System.out.println("Pocetak rada aplikacije: " + datum.toString());
 
 		// generisi vozila
 
-		List<Vozilo> vozila = administracijaVozila.generisi(); // kreirali smo model sa dummy podacima
+		 administracijaVozila.generisi(); // generisi sluzi za inicijalizaciju 
 
 		System.out.println("----------------Glavna programska petlja-------------------");
 
@@ -23,47 +24,48 @@ public class AppConsole {
 		while (1 == 1) { // obicno je glavna petlja korisnickog interfejsa bezkonacna, petlja drzi
 							// aplikaciju zivom, neki tread mora da drzi app zivom
 			prikaziOpcije();
-			System.out.println(">:");
+			
 			String s = in.nextLine();
 			System.out.println("You entered a string " + s);
+			System.out.println(">:");
 			switch (s) {
-
 			case "0":
-				opcija0(vozila);
+				opcija0();
 				break;
 			case "1":
-				opcija1(vozila);
+				opcija1();
 				break;
 			case "2":
-				opcija2(vozila);
+				opcija2();
 				break;
 			}
-			if ("kraj".equalsIgnoreCase(s)) {
+			if ("kraj".equals(s)) {
 				System.out.println("Kraj rada, hvala!");
 				break; // iz while petlje
 			}
 		}
-	} // izlaz iz main metode
+	} 
 
-	private static void opcija0(List<Vozilo> vozila) {
+	private static void opcija0() throws ResultNotFoundException{
+		List<Vozilo> vozila = administracijaVozila.dajSvaVozila();
 		System.out.println("========IZLISTAJ VOZILA=========");
 		System.out.println("Ukupno vozila: " + vozila.size());
 		izlistajVozila(vozila);
 	}
 
-	private static void opcija1(List<Vozilo> vozila) {
+	private static void opcija1() {
 		// izdvoj euro 3 vozila
 		System.out.println("========IZLISTAJ EURO 3 VOZILA=========");
-		List<Vozilo> euro3Vozila = administracijaVozila.euro3Vozila(vozila); // izdvoji euro3 vozila
-		System.out.println(euro3Vozila.size());
+		List<Vozilo> euro3Vozila = administracijaVozila.euro3Vozila(); // persistovali smo data storage na nivou aplikacije sto ne valja!!!!!
+		System.out.println(euro3Vozila.size());                   
 		izlistajVozila(euro3Vozila);
 		System.out.println("--------------------------------------------------");
 	}
 
-	private static void opcija2(List<Vozilo> vozila) {
+	private static void opcija2() {
 		// izdvoj aktivna vozila
 		System.out.println("========IZLISTAJ AKTIVNA VOZILA=========");
-		List<Vozilo> aktivnaVozila = administracijaVozila.aktivnaVozila(vozila); // izdvoji euro3 vozila
+		List<Vozilo> aktivnaVozila = administracijaVozila.aktivnaVozila(); // izdvoji euro3 vozila
 		System.out.println(aktivnaVozila.size());
 		izlistajVozila(aktivnaVozila);
 	}
@@ -77,16 +79,8 @@ public class AppConsole {
 		System.out.println("--------------------------------------------------");
 	}
 
-	private static void izlistajVozila(List<Vozilo> vozila) { // pripada static void main metodi zato i ona mora biti
-																// staticka
-		/*
-		 * for (Vozilo vozilo : vozila) { printVozilo(vozilo); }
-		 */
-
-		vozila.forEach(AppConsole::printVozilo); // kroz listu stampamo za svaki element klase App, lambda izraz ali
-		// ima samo jedan ulazni parametar u metodi printVozilo
-		// metoda mora da ima samo jedan parametar da bi ovaj izraz radio za svaki
-		// elemenat
+	private static void izlistajVozila(List<Vozilo> vozila) { 
+		vozila.forEach(AppConsole::printVozilo); 
 	}
 
 	private static void printVozilo(Vozilo vozilo) {
