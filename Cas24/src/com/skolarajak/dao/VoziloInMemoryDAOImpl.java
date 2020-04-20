@@ -33,7 +33,7 @@ public class VoziloInMemoryDAOImpl implements VoziloInMemoryDAO {
 
 	@Override
 	public Vozilo update(Vozilo vozilo) {
-		registrovanaVozila.put(vozilo.getRegistarskiBroj(), vozilo); // upis u bazu
+		registrovanaVozila.put(vozilo.getRegistarskiBroj(), vozilo); // key, value .... upis u bazu
 		// vozilo = read(vozilo.getRegistarskiBroj()); //ako bi imali bazu, polja koja
 		// su promenjena citao bi DAO i moramo da doadamo read, ne objekta vec polja
 		return vozilo;
