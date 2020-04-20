@@ -2,10 +2,18 @@ package com.skolarajak.model;
 
 public class Vozilo {
 	private final int godisteProizvodnje;
-
 	private boolean aktivno;
 	private String registarskiBroj;
+	private Vlasnik vlasnik;
 	
+	public Vlasnik getVlasnik() {
+		return vlasnik;
+	}
+
+	public void setVlasnik(Vlasnik vlasnik) {
+		this.vlasnik = vlasnik;
+	}
+
 	private Vozilo() {
 		this.godisteProizvodnje=0;
 	}

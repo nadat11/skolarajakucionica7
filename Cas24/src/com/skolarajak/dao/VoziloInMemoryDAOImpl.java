@@ -8,11 +8,8 @@ import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vozilo;
 import com.skolarajak.utils.RandomUtils;
 
-// interfejs vezuje DAO za nivo iznad 
-
-public class VoziloInMemoryDAOImpl implements VoziloInMemoryDAO {
-	private static final HashMap<String, Vozilo> registrovanaVozila = new HashMap<String, Vozilo>(); // data storage je
-																										// hash map
+public class VoziloInMemoryDAOImpl implements VoziloDAO {  
+	private static final HashMap<String, Vozilo> registrovanaVozila = new HashMap<String, Vozilo>(); 
 
 	@Override
 	public Vozilo create(Vozilo vozilo) {
@@ -24,18 +21,17 @@ public class VoziloInMemoryDAOImpl implements VoziloInMemoryDAO {
 
 	@Override
 	public Vozilo read(String registarskiBroj) throws ResultNotFoundException {
-		Vozilo vozilo = registrovanaVozila.get(registarskiBroj); // procitali smo vozilo
-		if (vozilo == null) { // proverili smo da li je null izbacili smo izuzetak ili
+		Vozilo vozilo = registrovanaVozila.get(registarskiBroj); 
+		if (vozilo == null) { 
 			throw new ResultNotFoundException("Objekat nije prodnadjen");
 		}
-		return vozilo; // smo vratili vozilo ako nije null
+		return vozilo; 
 	}
 
 	@Override
 	public Vozilo update(Vozilo vozilo) {
-		registrovanaVozila.put(vozilo.getRegistarskiBroj(), vozilo); // key, value .... upis u bazu
-		// vozilo = read(vozilo.getRegistarskiBroj()); //ako bi imali bazu, polja koja
-		// su promenjena citao bi DAO i moramo da doadamo read, ne objekta vec polja
+		registrovanaVozila.put(vozilo.getRegistarskiBroj(), vozilo); 
+	
 		return vozilo;
 	}
 
@@ -46,15 +42,11 @@ public class VoziloInMemoryDAOImpl implements VoziloInMemoryDAO {
 
 	private String kreirajRegistarskiBroj() {
 
-		String registarskiBroj = ""; // deklaracija iza petlje da bi se uradio return statment
-
-		while (1 == 1) { // 2 varijanta beskrajna petlja iz koje se izlazi ako nadjemo jedinstven broj
-			registarskiBroj = "Reg-" + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo(); // kreiramo
-																									// registarski broj
-			if (!VoziloInMemoryDAOImpl.registrovanaVozila.containsKey(registarskiBroj)) { // proverimo da li se ne
-																							// nalazi u mapi
-				VoziloInMemoryDAOImpl.registrovanaVozila.put(registarskiBroj, null); // ako nije u mapi dodajemo ga u
-																						// mapu
+		String registarskiBroj = ""; 
+		while (1 == 1) { 
+			registarskiBroj = "Reg-" + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo(); 																									
+			if (!VoziloInMemoryDAOImpl.registrovanaVozila.containsKey(registarskiBroj)) { 
+				VoziloInMemoryDAOImpl.registrovanaVozila.put(registarskiBroj, null); 
 				break;
 			} else {
 				System.out.println("*************DUPLICAT**************" + registarskiBroj);
@@ -69,10 +61,9 @@ public class VoziloInMemoryDAOImpl implements VoziloInMemoryDAO {
 	}
 
 	@Override
-	public List<Vozilo> getAll() throws ResultNotFoundException { // getAll se kroisti iz servisa
-		return VoziloInMemoryDAOImpl.registrovanaVozila.values() // mapa daj vrednosti ali te vrednosti su kolekcija
-				.stream().collect(Collectors.toList()); // kolekciju smo prebacili u stream, pa smo kolekciju vratili u
-														// listu
+	public List<Vozilo> getAll() throws ResultNotFoundException { 
+		return VoziloInMemoryDAOImpl.registrovanaVozila.values() 
+				.stream().collect(Collectors.toList()); 
 	}
 
 	@Override

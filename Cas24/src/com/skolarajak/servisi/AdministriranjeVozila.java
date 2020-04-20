@@ -2,6 +2,8 @@ package com.skolarajak.servisi;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.skolarajak.dao.VoziloDAO;
 import com.skolarajak.dao.VoziloInMemoryDAOImpl;
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vozilo;
@@ -12,10 +14,10 @@ public class AdministriranjeVozila {
 	private static final boolean STATUS = true;
 	private static final double PRAG_RASPODELE_AKTIVNIH_VOZILA = (double) 0.4;
 
-	private VoziloInMemoryDAOImpl voziloDAO;
+	private VoziloDAO voziloDAO;
 
 	public AdministriranjeVozila() {
-		voziloDAO = new VoziloInMemoryDAOImpl(); // inicijalizacija voziloDAO i podaci stizu iz DAOa
+		voziloDAO = new VoziloInMemoryDAOImpl(); 
 	}
 
 	/*
@@ -25,51 +27,28 @@ public class AdministriranjeVozila {
 	 */
 
 	public List<Vozilo> generisi() {
-		List<Vozilo> vozila = new ArrayList<Vozilo>(); // sada ovu listu ne punimo u servisu vec je vraca DAO
+		List<Vozilo> vozila = new ArrayList<Vozilo>(); 
 		try { // hvatamo sve greske
-			Vozilo zadnjeVozilo = null; // deklarisanje izvan petlje da bude vidljiva
+			Vozilo zadnjeVozilo = null; 
 			for (int i = 0; i < Konstante.UKUPAN_BROJ_VOZILA_U_SISTEMU; i++) {
 				int godinaProizvodnje = dodeliGodinuProizvodnje();
 				Vozilo vozilo = new Vozilo(godinaProizvodnje);
-				vozilo.setAktivno(Math.random() > PRAG_RASPODELE_AKTIVNIH_VOZILA); // logicki izraz
-				// vozila.add(vozilo); // iste objekte smo dodali u listu
-				zadnjeVozilo = voziloDAO.create(vozilo); // i iste objekte smo dodali u mapu :(
+				vozilo.setAktivno(Math.random() > PRAG_RASPODELE_AKTIVNIH_VOZILA); 
+				zadnjeVozilo = voziloDAO.create(vozilo); 
 			}
 
 			System.out.println("Ukupno registarskih brojeva: " + voziloDAO.count());
-			
-			/*System.out.println("Godina proizvodnje poslednjeg registrovanog: " + zadnjeVozilo.getRegistarskiBroj()
-					+ " : " + voziloDAO.read(zadnjeVozilo.getRegistarskiBroj()).isAktivno());
-
-			zadnjeVozilo.setAktivno(!zadnjeVozilo.isAktivno()); // ako je aktivno promenimo status na negaciju neaktivno
-																// je
-			zadnjeVozilo = voziloDAO.update(zadnjeVozilo);
-			System.out.println("Godina proizvodnje poslednjeg registrovanog: " + zadnjeVozilo.getRegistarskiBroj()
-					+ " : " + voziloDAO.read(zadnjeVozilo.getRegistarskiBroj()).isAktivno());
-			voziloDAO.delete(zadnjeVozilo.getRegistarskiBroj());*/
-
-			vozila = voziloDAO.getAll(); // dodali smo listu iz DAOa (iz skladista),  moramo dodati pre ispaljivanja exceptiona
-			
-			//zadnjeVozilo = voziloDAO.read(zadnjeVozilo.getRegistarskiBroj());
-
-		} catch (ResultNotFoundException e) { // hendlujemo sve greske
-			System.out.println("OBRISANO");
-			System.out.println(e.getMessage()); // iz konstruktora ResultNotFoundException
+			vozila = voziloDAO.getAll();
+		} catch (ResultNotFoundException e) { 
+			System.out.println("OBRISANO"); 
+			System.out.println(e.getMessage()); 
 		}
-		/*
-		 * if(zadnjeVozilo != null) {
-		 * System.out.println("Godina proizvodnje poslednjeg registrovanog: " +
-		 * zadnjeVozilo.getRegistarskiBroj() + " : " + zadnjeVozilo.isAktivno()); } else
-		 * { System.out.println("OBRISANO"); }
-		 */ // null check
-		return vozila; // citamo iz dao kljuc ali ne postoji objekat jer smo ga obrisali null point
-						// exeption
-	} // moramo eksplicitno da ga proverimo da li je null, ili da bacimo exepption i
-		// da ga hvatamo i procesiramo
+		
+		return vozila; 
+	} 
+	public List<Vozilo> euro3Vozila() { 
 
-	public List<Vozilo> euro3Vozila() { // pocetna lista sadrzi sva vozila
-
-		List<Vozilo> euro3Vozila = voziloDAO.getEuro3Vozila(); // pozivamo metodu iz DAO
+		List<Vozilo> euro3Vozila = voziloDAO.getEuro3Vozila(); 
 		return euro3Vozila;
 	}
 

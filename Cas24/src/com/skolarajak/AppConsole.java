@@ -14,15 +14,12 @@ public class AppConsole {
 		Date datum = new Date();
 		System.out.println("Pocetak rada aplikacije: " + datum.toString());
 
-		// generisi vozila
-
-		 administracijaVozila.generisi(); // generisi sluzi za inicijalizaciju 
+		 administracijaVozila.generisi(); 
 
 		System.out.println("----------------Glavna programska petlja-------------------");
 
 		Scanner in = new Scanner(System.in);
-		while (1 == 1) { // obicno je glavna petlja korisnickog interfejsa bezkonacna, petlja drzi
-							// aplikaciju zivom, neki tread mora da drzi app zivom
+		while (1 == 1) { 
 			prikaziOpcije();
 			
 			String s = in.nextLine();
@@ -41,7 +38,7 @@ public class AppConsole {
 			}
 			if ("kraj".equals(s)) {
 				System.out.println("Kraj rada, hvala!");
-				break; // iz while petlje
+				break; 
 			}
 		}
 	} 
