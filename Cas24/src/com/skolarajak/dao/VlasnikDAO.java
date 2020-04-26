@@ -16,4 +16,6 @@ public interface VlasnikDAO {
 
 	List<Vlasnik> getAll() throws ResultNotFoundException;
 	long count();
+	
+	List<Vlasnik> getAllVlasniciAktivnihVozila() throws ResultNotFoundException; 
 }

@@ -38,4 +38,12 @@ public class Vlasnik {
 		this.vozilo = vozilo;
 	}
 
+	public String toString() {
+		return "Ime: " + this.getIme() 
+		+  " Prezime: " + this.getPrezime()
+		 +  " Broj dozovole: " + this.getBrojVozackeDozvole() 
+           +     " Reg broj vozila " + this.vozilo.getRegistarskiBroj()
+              +  " Status vozila: " +this.vozilo.isAktivno();
+}
+
 }

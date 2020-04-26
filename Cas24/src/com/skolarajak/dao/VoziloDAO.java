@@ -18,6 +18,6 @@ public interface VoziloDAO {
 	List<Vozilo> getEuro3Vozila(); 
 	List<Vozilo> getAktivnaVozila(); 
 	
-	
 	long count();
+	List<Vozilo> getAllVozilaCijeImeVlasnikaSadrziSlovoA() throws ResultNotFoundException;
 }

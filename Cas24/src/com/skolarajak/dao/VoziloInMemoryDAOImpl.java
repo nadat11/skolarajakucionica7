@@ -14,7 +14,7 @@ public class VoziloInMemoryDAOImpl implements VoziloDAO {
 	@Override
 	public Vozilo create(Vozilo vozilo) {
 		String registarskiBroj = kreirajRegistarskiBroj();
-		vozilo.setRegistarskiBroj(registarskiBroj);
+		vozilo.setRegistarskiBroj(registarskiBroj);	
 		registrovanaVozila.put(vozilo.getRegistarskiBroj(), vozilo);
 		return vozilo;
 	}
@@ -80,4 +80,9 @@ public class VoziloInMemoryDAOImpl implements VoziloDAO {
 				.filter(v -> v.isAktivno()).collect(Collectors.toList());
 	}
 
+	@Override
+	public List<Vozilo> getAllVozilaCijeImeVlasnikaSadrziSlovoA() {
+		return VoziloInMemoryDAOImpl.registrovanaVozila.values().stream() // filter nad celokupnim skupom vrednosti
+				.filter(v -> v.getVlasnik().getIme().contains("A")).collect(Collectors.toList());
+	}
 }

@@ -43,8 +43,9 @@ public class Vozilo {
 
 	@Override
 	public String toString() {
-		return "Vozilo [godisteProizvodnje=" + godisteProizvodnje + ", aktivno=" + aktivno + ", registarskiBroj="
-				+ registarskiBroj + "]";
+		return "Godiste: " + this.getGodisteProizvodnje() + " Aktivno: " + this.isAktivno()
+		+ " Registarski broj: " + this.getRegistarskiBroj()
+		+ " Ime vlasnika: " +this.vlasnik.getIme();
 	}
 
 	@Override

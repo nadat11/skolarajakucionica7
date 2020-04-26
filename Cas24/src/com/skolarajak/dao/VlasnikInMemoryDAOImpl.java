@@ -15,6 +15,9 @@ public class VlasnikInMemoryDAOImpl implements VlasnikDAO {
 	public Vlasnik create(Vlasnik vlasnik) {
 		String brojVozackeDozvole = kreirajBrojVozackeDozvole();
 		vlasnik.setBrojVozackeDozvole(brojVozackeDozvole);
+		//ime i prezime u odredjenom formatu sa slucajnim slovima
+		vlasnik.setIme(RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo());
+		vlasnik.setPrezime(RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo());
 		vlasnici.put(vlasnik.getBrojVozackeDozvole(), vlasnik);
 		return vlasnik;
 	}
@@ -48,7 +51,7 @@ public class VlasnikInMemoryDAOImpl implements VlasnikDAO {
 		String brojVozackeDozvole = "";
 
 		while (1 == 1) {
-			brojVozackeDozvole = "Broj dozvole-" + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo();
+			brojVozackeDozvole = " Broj dozvole-" + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo();
 			if (!VlasnikInMemoryDAOImpl.vlasnici.containsKey(brojVozackeDozvole)) {
 				VlasnikInMemoryDAOImpl.vlasnici.put(brojVozackeDozvole, null);
 				break;
@@ -58,11 +61,16 @@ public class VlasnikInMemoryDAOImpl implements VlasnikDAO {
 		}
 		return brojVozackeDozvole;
 	}
-
+	
 	@Override
 	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+		return VlasnikInMemoryDAOImpl.vlasnici.keySet().size();
+	}
+
+	@Override
+	public List<Vlasnik> getAllVlasniciAktivnihVozila() throws ResultNotFoundException {
+		return  VlasnikInMemoryDAOImpl.vlasnici.values().stream() 
+			.filter(v -> v.getVozilo().isAktivno()).collect(Collectors.toList());
 	}
 
 }
