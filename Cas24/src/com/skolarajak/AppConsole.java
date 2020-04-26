@@ -1,5 +1,6 @@
 package com.skolarajak;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -13,7 +14,7 @@ import com.skolarajak.utils.PrikazUtils;
 public class AppConsole {
 	static final AdministriranjeVozila administracijaVozila = new AdministriranjeVozila();
 
-	public static void main(String[] args) throws ResultNotFoundException {
+	public static void main(String[] args) throws ResultNotFoundException, IOException {
 		Date datum = new Date();
 		System.out.println("Pocetak rada aplikacije: " + datum.toString());
 
@@ -83,23 +84,25 @@ public class AppConsole {
 	private static void opcija3() throws ResultNotFoundException {
 		// izdvoj sve vlasnike
 		System.out.println("========IZLISTAJ SVE VLASNIKE=========");
-		List<Vlasnik> vlasnici = administracijaVozila.dajSveVlasnike(); // izdvoji euro3 vozila
+		List<Vlasnik> vlasnici = administracijaVozila.dajSveVlasnike(); 
 		System.out.println("Ukupno vlasnika: " + vlasnici.size());
 		PrikazUtils.izlistajVlasnici(vlasnici);
 	}
-	private static void opcija4() throws ResultNotFoundException {
+	private static void opcija4() throws ResultNotFoundException, IOException { 
 		// izdvoj sve vlasnike
 		System.out.println("========IZLISTAJ VLASNIKE SVIH AKTIVNIH VOZILA=========");
-		List<Vlasnik> vlasnici = administracijaVozila.dajSveVlasnikeAktivnihVozila(); // izdvoji euro3 vozila
-		System.out.println("Ukupno vlasnika: " + vlasnici.size());
+		List<Vlasnik> vlasnici = administracijaVozila.dajSveVlasnikeAktivnihVozila(); 
 		PrikazUtils.izlistajVlasnici(vlasnici);
+		PrikazUtils.izlistajVlasnikeUDatoteku(vlasnici);
 	}
-	private static void opcija5() throws ResultNotFoundException {
+	private static void opcija5() throws ResultNotFoundException, IOException {
 		// izdvoj sve vlasnike
 		System.out.println("========IZLISTAJ SVA VOZILA CIJI VLASNICI IMAJU SLOVO A U IMENU=========");
 		List<Vozilo> vozilo = administracijaVozila.dajSvaVozilaCijeImeVlasnikaSadrziSlovoA(); 
 		System.out.println(vozilo.size());
 		PrikazUtils.izlistajVozila(vozilo);
+		PrikazUtils.izlistajVozilaUDatoteku(vozilo);
+		PrikazUtils.izlistajVozilaIzDatoteke();
 	}
 
 	private static void prikaziOpcije() { // rad sa app iz konzole
