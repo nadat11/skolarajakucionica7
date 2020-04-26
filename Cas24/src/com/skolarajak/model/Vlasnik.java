@@ -45,5 +45,7 @@ public class Vlasnik {
            +     " Reg broj vozila " + this.vozilo.getRegistarskiBroj()
               +  " Status vozila: " +this.vozilo.isAktivno();
 }
-
+/*	public String toCVS() {
+		return String separator ;
+	}*/
 }

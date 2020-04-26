@@ -22,7 +22,7 @@ public class PrikazUtils {
 		Path path =Paths.get(FILE_ROOT);
 		try (BufferedWriter writer= Files.newBufferedWriter(path /* StandardOpenOption.APPEND*/)){ //newBufferedWriter opcija append dodaje u file ne stvara se novi 
 			  for(Vozilo v : vozila) {
-				  writer.write(v.toString()+"\r\n");
+				  writer.write(v.toString()+"\r\n"); //toCSV i generisan file import u Excel
 			  }
 		}
 	}
