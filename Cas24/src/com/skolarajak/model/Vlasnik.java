@@ -1,6 +1,9 @@
 package com.skolarajak.model;
 
+import com.skolarajak.utils.PrikazUtils;
+
 public class Vlasnik {
+	
 	private String ime;
 	private String prezime;
 	private String brojVozackeDozvole;
@@ -38,14 +41,18 @@ public class Vlasnik {
 		this.vozilo = vozilo;
 	}
 
-	public String toString() {
+public String toString() {
 		return "Ime: " + this.getIme() 
 		+  " Prezime: " + this.getPrezime()
 		 +  " Broj dozovole: " + this.getBrojVozackeDozvole() 
            +     " Reg broj vozila " + this.vozilo.getRegistarskiBroj()
               +  " Status vozila: " +this.vozilo.isAktivno();
 }
-/*	public String toCVS() {
-		return String separator ;
-	}*/
+	public String toCSV() {
+		return this.getIme() + PrikazUtils.SEPARATOR
+				+ this.getPrezime() + PrikazUtils.SEPARATOR
+				+ this.getBrojVozackeDozvole() + PrikazUtils.SEPARATOR
+				+ this.vozilo.getRegistarskiBroj() + PrikazUtils.SEPARATOR
+				+ this.vozilo.isAktivno();
+	}
 }

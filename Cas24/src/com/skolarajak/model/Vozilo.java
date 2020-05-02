@@ -1,11 +1,13 @@
 package com.skolarajak.model;
 
+import com.skolarajak.utils.PrikazUtils;
+
 public class Vozilo {
 	private final int godisteProizvodnje;
 	private boolean aktivno;
 	private String registarskiBroj;
 	private Vlasnik vlasnik;
-	
+
 	public Vlasnik getVlasnik() {
 		return vlasnik;
 	}
@@ -15,12 +17,13 @@ public class Vozilo {
 	}
 
 	private Vozilo() {
-		this.godisteProizvodnje=0;
+		this.godisteProizvodnje = 0;
 	}
-	
+
 	public Vozilo(int godisteProizvodnje) {
-		this.godisteProizvodnje=godisteProizvodnje;
+		this.godisteProizvodnje = godisteProizvodnje;
 	}
+
 	public int getGodisteProizvodnje() {
 		return godisteProizvodnje;
 	}
@@ -43,9 +46,8 @@ public class Vozilo {
 
 	@Override
 	public String toString() {
-		return "Godiste: " + this.getGodisteProizvodnje() + " Aktivno: " + this.isAktivno()
-		+ " Registarski broj: " + this.getRegistarskiBroj()
-		+ " Ime vlasnika: " +this.vlasnik.getIme();
+		return "Godiste: " + this.getGodisteProizvodnje() + " Aktivno: " + this.isAktivno() + " Registarski broj: "
+				+ this.getRegistarskiBroj() + " Ime vlasnika: " + this.vlasnik.getIme();
 	}
 
 	@Override
@@ -78,5 +80,9 @@ public class Vozilo {
 			return false;
 		return true;
 	}
-	
+
+	public String toCSV() {
+		return this.getGodisteProizvodnje() + PrikazUtils.SEPARATOR + this.isAktivno() + PrikazUtils.SEPARATOR
+				+ this.vlasnik.getIme();
+	}
 }

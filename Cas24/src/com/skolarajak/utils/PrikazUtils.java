@@ -13,7 +13,7 @@ import com.skolarajak.model.Vozilo;
 
 public class PrikazUtils {
 	private static String FILE_ROOT = "c:/tmp/izvestaj.txt";
-	//private static String SEPARATOR = ";";
+	public static String SEPARATOR = ";";
 	public static void izlistajVozila(List<Vozilo> vozila) {
 		vozila.forEach(PrikazUtils::printVozilo);
 	}
@@ -21,8 +21,11 @@ public class PrikazUtils {
 	public static void izlistajVozilaUDatoteku(List<Vozilo> vozila) throws IOException {
 		Path path =Paths.get(FILE_ROOT);
 		try (BufferedWriter writer= Files.newBufferedWriter(path /* StandardOpenOption.APPEND*/)){ //newBufferedWriter opcija append dodaje u file ne stvara se novi 
-			  for(Vozilo v : vozila) {
-				  writer.write(v.toString()+"\r\n"); //toCSV i generisan file import u Excel
+			writer.write("godina" + PrikazUtils.SEPARATOR + "status" + PrikazUtils.SEPARATOR + "reg" + PrikazUtils.SEPARATOR + "ime" );
+			writer.newLine();
+			for(Vozilo v : vozila) {
+				  writer.write(v.toCSV());//"\r\n");
+				  writer.newLine();//toCSV i generisan file import u Excel
 			  }
 		}
 	}
@@ -53,7 +56,9 @@ public class PrikazUtils {
 		Path path =Paths.get(FILE_ROOT);
 		try (BufferedWriter writer= Files.newBufferedWriter(path)){
 			  for(Vlasnik v : vlasnici) {
-				  writer.write(v.toString()+"\r\n");    //getBrojVozackeDozvole() + SEPARATOR+ v.getIme());
+				  writer.write(v.toString()+"\r\n");
+				  writer.newLine();//  writer.write(v.toString()+"\r\n");   // umesto to String menja se u toCSV
+				  //getBrojVozackeDozvole() + SEPARATOR+ v.getIme());
 				//  writer.newLine(); // line separator
 			  };//.write(vlasnici.); 
 	}
