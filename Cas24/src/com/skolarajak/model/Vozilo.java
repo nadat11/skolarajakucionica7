@@ -16,7 +16,7 @@ public class Vozilo {
 		this.vlasnik = vlasnik;
 	}
 
-	private Vozilo() {
+	public Vozilo() {
 		this.godisteProizvodnje = 0;
 	}
 

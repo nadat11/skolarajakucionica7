@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.skolarajak.dao.VlasnikDAO;
+import com.skolarajak.dao.VlasnikFileSystemDAO;
 import com.skolarajak.dao.VlasnikInMemoryDAOImpl;
 import com.skolarajak.dao.VoziloDAO;
 import com.skolarajak.dao.VoziloInMemoryDAOImpl;
@@ -22,8 +23,8 @@ public class AdministriranjeVozila {
 
 	// konstruktor
 	public AdministriranjeVozila() {
-		voziloDAO = new VoziloInMemoryDAOImpl();
-		vlasnikDAO = new VlasnikInMemoryDAOImpl();
+		voziloDAO = new VoziloInMemoryDAOImpl(); // citamo iz memorije
+		vlasnikDAO = new VlasnikFileSystemDAO(); //povezivanje servisa sa storage layerom, citamo iz file-a
 	}
 
 	/*
@@ -44,13 +45,12 @@ public class AdministriranjeVozila {
 
 				// kreiranje vlasnika
 				Vlasnik vlasnik = new Vlasnik();
-				vlasnik = vlasnikDAO.create(vlasnik);// vlasnik se ubacuje u mapu
-				vlasnik.setVozilo(zadnjeVozilo); // setovali smo vozilo vlasnika ali u radu sa referencama ne bi radilo
-													// vec
-				vlasnik = vlasnikDAO.update(vlasnik); // se mora updatovati podatak svaki put kada se radi sa objektom
-														// koji predstavlja neki model
-
-				zadnjeVozilo.setVlasnik(vlasnik); // isto i kod vozila
+				vlasnik = vlasnikDAO.create(vlasnik);
+				vlasnik.setVozilo(zadnjeVozilo); 
+				
+				vlasnik = vlasnikDAO.update(vlasnik); 
+				
+				zadnjeVozilo.setVlasnik(vlasnik); //vozilo radi sa memorijom 
 				zadnjeVozilo = voziloDAO.update(zadnjeVozilo);
 			}
 

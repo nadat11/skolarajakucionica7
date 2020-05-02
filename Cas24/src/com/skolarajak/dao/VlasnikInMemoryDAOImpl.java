@@ -15,7 +15,6 @@ public class VlasnikInMemoryDAOImpl implements VlasnikDAO {
 	public Vlasnik create(Vlasnik vlasnik) {
 		String brojVozackeDozvole = kreirajBrojVozackeDozvole();
 		vlasnik.setBrojVozackeDozvole(brojVozackeDozvole);
-		//ime i prezime u odredjenom formatu sa slucajnim slovima
 		vlasnik.setIme(RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo());
 		vlasnik.setPrezime(RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo());
 		vlasnici.put(vlasnik.getBrojVozackeDozvole(), vlasnik);
