@@ -58,6 +58,12 @@ public class AdministriranjeVozila {
 					+ zadnjeVozilo.getVlasnik().getPrezime() + " " + zadnjeVozilo.getVlasnik().getBrojVozackeDozvole());
 
 			System.out.println("Ukupno registarskih brojeva: " + voziloDAO.count());
+			 //uporedjivanje memorijskog dela i file systema, ucitavanje da li je sinhornizovano
+			Vlasnik zadnjiVlasnik = zadnjeVozilo.getVlasnik();
+			Vlasnik ucitaniVlasnik = vlasnikDAO.read(zadnjiVlasnik.getBrojVozackeDozvole());
+			
+			System.out.println(zadnjiVlasnik.getBrojVozackeDozvole() + "======" + zadnjiVlasnik.getPrezime()+"-------"+ucitaniVlasnik.getPrezime());
+			
 			vozila = voziloDAO.getAll();
 		} catch (ResultNotFoundException e) {
 			System.out.println("OBRISANO");

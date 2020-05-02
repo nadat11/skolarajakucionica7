@@ -1,7 +1,11 @@
 package com.skolarajak.dao;
 
+import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
@@ -38,16 +42,22 @@ public class VlasnikFileSystemDAO implements VlasnikDAO {
 	}
 
 	@Override
-	public Vlasnik read(String brojVozackeDozvole) throws ResultNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+	public Vlasnik read(String brojVozackeDozvole) throws ResultNotFoundException { //napravili smo dekoder
+		XMLDecoder decoder = null;
+		try {
+			decoder= new XMLDecoder(new BufferedInputStream(new FileInputStream(getFileName(brojVozackeDozvole)))); //insatncirali dekodera buffer and input file readera , get metoda trazi u c tempu file pod nazivom brojVozacke dozvole sa xml ekstenzijom
+		} catch (FileNotFoundException e) {
+			System.out.println("ERROR: File dvd.xml not found"); // ako nismo nasli file
+		}
+		Vlasnik vlasnik = (Vlasnik)decoder.readObject(); //ako smo nasli decoder.read object onda ga kastujemo jer se radi o tipu Vlasnik
+		return vlasnik; // i onda ga vratimo
 	}
 
 	@Override
 	public Vlasnik update(Vlasnik vlasnik) { // update je create za postojeci fajl osim sto ne setujemo kljuc i slucajne vrednosti iz createa
 		XMLEncoder encoder = null; // deklaracija xml enkoder
 		try {
-			encoder = new XMLEncoder (new BufferedOutputStream(new FileOutputStream(FILE_ROOT + vlasnik.getBrojVozackeDozvole() + EXTENZIJA)));// u insatncama vlasnika radimo sa  file operacija
+			encoder = new XMLEncoder (new BufferedOutputStream(new FileOutputStream(getFileName(vlasnik.getBrojVozackeDozvole()))));// u insatncama vlasnika radimo sa  file operacija
 		}catch (FileNotFoundException fileNotFound) { //
 			System.out.println("ERROR: While Creating or Opening the File dvd.xml");
 		}
@@ -58,8 +68,8 @@ public class VlasnikFileSystemDAO implements VlasnikDAO {
 
 	@Override
 	public void delete(String brojVozackeDozvole) {
-		// TODO Auto-generated method stub
-
+		File file = new File(getFileName(brojVozackeDozvole)) ;
+		file.delete();
 	}
 
 	@Override
@@ -78,6 +88,9 @@ public class VlasnikFileSystemDAO implements VlasnikDAO {
 	public List<Vlasnik> getAllVlasniciAktivnihVozila() throws ResultNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	private String getFileName(String brojVozackeDozvole){
+		return FILE_ROOT + brojVozackeDozvole + EXTENZIJA;
 	}
 
 }
