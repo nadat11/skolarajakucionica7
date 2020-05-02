@@ -3,6 +3,7 @@ package com.skolarajak.utils;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,15 +20,11 @@ public class PrikazUtils {
 	}
 
 	public static void izlistajVozilaUDatoteku(List<Vozilo> vozila) throws IOException {
-		Path path =Paths.get(FILE_ROOT);
-		try (BufferedWriter writer= Files.newBufferedWriter(path /* StandardOpenOption.APPEND*/)){ //newBufferedWriter opcija append dodaje u file ne stvara se novi 
-			writer.write("godina" + PrikazUtils.SEPARATOR + "status" + PrikazUtils.SEPARATOR + "reg" + PrikazUtils.SEPARATOR + "ime" );
-			writer.newLine();
-			for(Vozilo v : vozila) {
-				  writer.write(v.toCSV());//"\r\n");
-				  writer.newLine();//toCSV i generisan file import u Excel
-			  }
-		}
+		Class clazz = Vozilo.class;
+		Field[] fields = clazz.getDeclaredFields();
+			for(Field field : fields ) {
+				System.out.println("fieldName: " + field.getName()+", fieldType:  " + field.getType());
+			}
 	}
 	public static void izlistajVozilaIzDatoteke() throws IOException { //citanje iz file-a
 		Path path =Paths.get(FILE_ROOT);
