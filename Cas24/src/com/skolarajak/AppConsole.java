@@ -63,7 +63,7 @@ public class AppConsole {
 		PrikazUtils.izlistajVozila(vozila);
 	}
 
-	private static void opcija1() {
+	private static void opcija1() throws ResultNotFoundException {
 		// izdvoj euro 3 vozila
 		System.out.println("========IZLISTAJ EURO 3 VOZILA=========");
 		List<Vozilo> euro3Vozila = administracijaVozila.euro3Vozila(); // persistovali smo data storage na nivou
@@ -73,7 +73,7 @@ public class AppConsole {
 		System.out.println("--------------------------------------------------");
 	}
 
-	private static void opcija2() {
+	private static void opcija2() throws ResultNotFoundException {
 		// izdvoj aktivna vozila
 		System.out.println("========IZLISTAJ AKTIVNA VOZILA=========");
 		List<Vozilo> aktivnaVozila = administracijaVozila.aktivnaVozila(); // izdvoji euro3 vozila

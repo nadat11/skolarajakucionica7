@@ -64,7 +64,7 @@ public class VlasnikFileSystemDAO implements VlasnikDAO {
 			System.out.println("ERROR: While Creating or Opening the File dvd.xml");
 		}
 		encoder.writeObject(vlasnik);
-		encoder.close(); //zatvra sve prethodne file stremove
+		encoder.close(); //zatvara sve prethodne file stremove
 		return vlasnik;
 		}
 

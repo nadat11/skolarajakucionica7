@@ -7,6 +7,7 @@ import com.skolarajak.dao.VlasnikDAO;
 import com.skolarajak.dao.VlasnikFileSystemDAO;
 import com.skolarajak.dao.VlasnikInMemoryDAOImpl;
 import com.skolarajak.dao.VoziloDAO;
+import com.skolarajak.dao.VoziloFileSystemDAO;
 import com.skolarajak.dao.VoziloInMemoryDAOImpl;
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vlasnik;
@@ -23,7 +24,7 @@ public class AdministriranjeVozila {
 
 	// konstruktor
 	public AdministriranjeVozila() {
-		voziloDAO = new VoziloInMemoryDAOImpl(); // citamo iz memorije
+		voziloDAO = new VoziloFileSystemDAO(); // citamo iz memorije
 		vlasnikDAO = new VlasnikFileSystemDAO(); //povezivanje servisa sa storage layerom, citamo iz file-a
 	}
 
@@ -74,13 +75,13 @@ public class AdministriranjeVozila {
 		return vozila;
 	}
 
-	public List<Vozilo> euro3Vozila() {
+	public List<Vozilo> euro3Vozila() throws ResultNotFoundException {
 
 		List<Vozilo> euro3Vozila = voziloDAO.getEuro3Vozila();
 		return euro3Vozila;
 	}
 
-	public List<Vozilo> aktivnaVozila() {
+	public List<Vozilo> aktivnaVozila() throws ResultNotFoundException {
 		List<Vozilo> aktivnaVozila = voziloDAO.getAktivnaVozila();
 		return aktivnaVozila;
 	}
