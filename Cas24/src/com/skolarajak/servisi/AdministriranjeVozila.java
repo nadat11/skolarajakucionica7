@@ -58,6 +58,7 @@ public class AdministriranjeVozila {
 					+ zadnjeVozilo.getVlasnik().getPrezime() + " " + zadnjeVozilo.getVlasnik().getBrojVozackeDozvole());
 
 			System.out.println("Ukupno registarskih brojeva: " + voziloDAO.count());
+			System.out.println("Ukupno vlasnika: " + vlasnikDAO.count());
 			 //uporedjivanje memorijskog dela i file systema, ucitavanje da li je sinhornizovano
 			Vlasnik zadnjiVlasnik = zadnjeVozilo.getVlasnik();
 			Vlasnik ucitaniVlasnik = vlasnikDAO.read(zadnjiVlasnik.getBrojVozackeDozvole());

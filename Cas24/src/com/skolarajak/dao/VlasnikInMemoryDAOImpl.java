@@ -62,7 +62,7 @@ public class VlasnikInMemoryDAOImpl implements VlasnikDAO {
 	}
 	
 	@Override
-	public long count() {
+	public long count() throws ResultNotFoundException {
 		return VlasnikInMemoryDAOImpl.vlasnici.keySet().size();
 	}
 

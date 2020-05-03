@@ -8,7 +8,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vlasnik;
@@ -74,20 +76,32 @@ public class VlasnikFileSystemDAO implements VlasnikDAO {
 
 	@Override
 	public List<Vlasnik> getAll() throws ResultNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		// selektovati sve fajlove iz temp dir i ucitati ih
+//		List<String> brojeviVozackeDozvole = new ArrayList<String>(); // result s bice lista svih fajl imena sa .xml ekstenzijom
+		List<Vlasnik> vlasnici = new ArrayList<Vlasnik>();
+		
+		File[] files = new File(FILE_ROOT).listFiles(); // new File objekat napravljen je da pokazuje na temp dir ima metodu listFiles()
+		
+		for (File file : files) { // iteriramo kroz objekte 
+			if (file.isFile()) { // ako je file file 
+				String fileName = file.getName();
+				String brojVozackeDozvole = fileName.substring(0, fileName.lastIndexOf("."));
+				vlasnici.add(this.read(brojVozackeDozvole));                  //add(fileName.substring(0,fileName.lastIndexOf("."))); //dodaj u listu
+			}
+		}
+		return vlasnici;
 	}
 
 	@Override
-	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+	public long count()throws ResultNotFoundException  { 
+		return this.getAll().size();
 	}
 
 	@Override
 	public List<Vlasnik> getAllVlasniciAktivnihVozila() throws ResultNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		return  getAll()				
+				.stream().filter(v -> v.getVozilo().isAktivno()).collect(Collectors.toList());
+		
 	}
 	private String getFileName(String brojVozackeDozvole){
 		return FILE_ROOT + brojVozackeDozvole + EXTENZIJA;
