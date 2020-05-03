@@ -22,9 +22,9 @@ public class AdministriranjeVozila {
 	private VoziloDAO voziloDAO;
 	private VlasnikDAO vlasnikDAO;
 
-	// konstruktor
+	// konstruktor i jedina veza sa skladistima!!! 
 	public AdministriranjeVozila() {
-		voziloDAO = new VoziloFileSystemDAO(); // citamo iz memorije
+		voziloDAO = new VoziloFileSystemDAO(); // citamo iz memorije 
 		vlasnikDAO = new VlasnikFileSystemDAO(); //povezivanje servisa sa storage layerom, citamo iz file-a
 	}
 
