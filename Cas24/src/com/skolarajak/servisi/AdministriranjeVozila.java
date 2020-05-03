@@ -99,7 +99,7 @@ public class AdministriranjeVozila {
 	public List<Vozilo> dajSvaVozilaCijeImeVlasnikaSadrziSlovoA() throws ResultNotFoundException {
 		return voziloDAO.getAllVozilaCijeImeVlasnikaSadrziSlovoA();
 	}
-	private int dodeliGodinuProizvodnje() {
+	public int dodeliGodinuProizvodnje() {
 		int godina = RandomUtils.slucajanBrojUIntervalu(Konstante.MIN_VOZILO_GODISTE, Konstante.MAX_VOZILO_GODISTE);
 		return godina;
 	}
