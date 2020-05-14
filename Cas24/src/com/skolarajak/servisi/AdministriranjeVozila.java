@@ -26,7 +26,12 @@ public class AdministriranjeVozila {
 	// konstruktor i jedina veza sa skladistima!!! 
 	public AdministriranjeVozila() {
 		voziloDAO = new VoziloFileSystemDAO(); // citamo iz file sistema
-		vlasnikDAO = new VlasnikDBDAOImpl(); //povezivanje sa DB samo vlasnik
+		try {
+			vlasnikDAO = new VlasnikDBDAOImpl();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //povezivanje sa DB samo vlasnik
 	}
 
 	/*
@@ -47,6 +52,12 @@ public class AdministriranjeVozila {
 
 				// kreiranje vlasnika
 				Vlasnik vlasnik = new Vlasnik();
+				
+				//
+				vlasnik.setBrojVozackeDozvole(String.valueOf(System.currentTimeMillis()));
+				vlasnik.setIme(RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo());
+				vlasnik.setPrezime(RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo());
+				
 				vlasnik = vlasnikDAO.create(vlasnik);
 				vlasnik.setVozilo(zadnjeVozilo); 
 				
