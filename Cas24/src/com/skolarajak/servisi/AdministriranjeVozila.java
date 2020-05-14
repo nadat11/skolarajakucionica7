@@ -25,8 +25,8 @@ public class AdministriranjeVozila {
 
 	// konstruktor i jedina veza sa skladistima!!! 
 	public AdministriranjeVozila() {
-		voziloDAO = new VoziloFileSystemDAO(); // citamo iz memorije 
-		vlasnikDAO = new VlasnikDBDAOImpl(); //povezivanje sa DB
+		voziloDAO = new VoziloFileSystemDAO(); // citamo iz file sistema
+		vlasnikDAO = new VlasnikDBDAOImpl(); //povezivanje sa DB samo vlasnik
 	}
 
 	/*
