@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.skolarajak.dao.VlasnikDAO;
+import com.skolarajak.dao.VlasnikDBDAOImpl;
 import com.skolarajak.dao.VlasnikFileSystemDAO;
 import com.skolarajak.dao.VlasnikInMemoryDAOImpl;
 import com.skolarajak.dao.VoziloDAO;
@@ -25,7 +26,7 @@ public class AdministriranjeVozila {
 	// konstruktor i jedina veza sa skladistima!!! 
 	public AdministriranjeVozila() {
 		voziloDAO = new VoziloFileSystemDAO(); // citamo iz memorije 
-		vlasnikDAO = new VlasnikFileSystemDAO(); //povezivanje servisa sa storage layerom, citamo iz file-a
+		vlasnikDAO = new VlasnikDBDAOImpl(); //povezivanje sa DB
 	}
 
 	/*
