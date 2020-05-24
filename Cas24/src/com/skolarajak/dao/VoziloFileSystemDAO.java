@@ -23,7 +23,7 @@ public class VoziloFileSystemDAO implements VoziloDAO {
 
 	@Override
 	public Vozilo create(Vozilo vozilo) {
-		vozilo.setRegistarskiBroj(String.valueOf(System.currentTimeMillis()));
+		//vozilo.setRegistarskiBroj(String.valueOf(System.currentTimeMillis()));
 
 		XMLEncoder encoder = null; // deklaracija xml enkoder
 		try {

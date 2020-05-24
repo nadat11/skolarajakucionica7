@@ -5,11 +5,9 @@ import java.util.List;
 
 import com.skolarajak.dao.VlasnikDAO;
 import com.skolarajak.dao.VlasnikDBDAOImpl;
-import com.skolarajak.dao.VlasnikFileSystemDAO;
-import com.skolarajak.dao.VlasnikInMemoryDAOImpl;
 import com.skolarajak.dao.VoziloDAO;
+import com.skolarajak.dao.VoziloDBDAOImpl;
 import com.skolarajak.dao.VoziloFileSystemDAO;
-import com.skolarajak.dao.VoziloInMemoryDAOImpl;
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vlasnik;
 import com.skolarajak.model.Vozilo;
@@ -27,7 +25,10 @@ public class AdministriranjeVozila {
 	public AdministriranjeVozila() {
 		voziloDAO = new VoziloFileSystemDAO(); // citamo iz file sistema
 		try {
+			
 			vlasnikDAO = new VlasnikDBDAOImpl();
+			voziloDAO = new VoziloDBDAOImpl();
+			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,24 +48,27 @@ public class AdministriranjeVozila {
 			for (int i = 0; i < Konstante.UKUPAN_BROJ_VOZILA_U_SISTEMU; i++) {
 				int godinaProizvodnje = dodeliGodinuProizvodnje();
 				Vozilo vozilo = new Vozilo(godinaProizvodnje);
+				vozilo.setRegistarskiBroj(String.valueOf(System.currentTimeMillis()));
 				vozilo.setAktivno(Math.random() > PRAG_RASPODELE_AKTIVNIH_VOZILA);
-				zadnjeVozilo = voziloDAO.create(vozilo);
+				
 
 				// kreiranje vlasnika
 				Vlasnik vlasnik = new Vlasnik();
-				
-				//
+
 				vlasnik.setBrojVozackeDozvole(String.valueOf(System.currentTimeMillis()));
 				vlasnik.setIme(RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo());
 				vlasnik.setPrezime(RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo());
 				
-				vlasnik = vlasnikDAO.create(vlasnik);
-				vlasnik.setVozilo(zadnjeVozilo); 
+
+				vlasnik = vlasnikDAO.create(vlasnik); //kreiranje vlasnika u BP
+				vozilo.setVlasnik(vlasnik);//vozilu smo setovali vlasnika,pre nego sto upisemo vozilo ono mora da ima vezu ka vlasniku
+				zadnjeVozilo = voziloDAO.create(vozilo);// i sada se to vozilo upisuje u bazu
+			
+				vlasnik.setVozilo(zadnjeVozilo);//vlasniku smo setovali vozilo
 				
-				vlasnik = vlasnikDAO.update(vlasnik); 
-				
-				zadnjeVozilo.setVlasnik(vlasnik); //vozilo radi sa memorijom 
+				vlasnik = vlasnikDAO.update(vlasnik); //oba updateujemo
 				zadnjeVozilo = voziloDAO.update(zadnjeVozilo);
+				
 			}
 
 			System.out.println("Vlasnik: " + zadnjeVozilo.getVlasnik().getIme() + " "
