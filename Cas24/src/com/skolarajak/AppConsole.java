@@ -48,6 +48,9 @@ public class AppConsole {
 			case "5":
 				opcija5();
 				break;
+			case "6":
+				opcija6();
+				break;
 			}
 			if ("kraj".equals(s)) {
 				System.out.println("Kraj rada, hvala!");
@@ -97,14 +100,17 @@ public class AppConsole {
 	}
 	private static void opcija5() throws ResultNotFoundException, IOException {
 		// izdvoj sve vlasnike
-		System.out.println("========IZLISTAJ SVA VOZILA CIJI VLASNICI IMAJU SLOVO A U IMENU=========");
+		System.out.println("========Izlistaj vozila svih vlasnika cije ime sadrzi slovo A=========");
 		List<Vozilo> vozilo = administracijaVozila.dajSvaVozilaCijeImeVlasnikaSadrziSlovoA(); 
 		System.out.println(vozilo.size());
 		PrikazUtils.izlistajVozila(vozilo);
 		PrikazUtils.izlistajVozilaUDatoteku(vozilo);
 		PrikazUtils.izlistajVozilaIzDatoteke();
 	}
-
+	private static void opcija6() throws ResultNotFoundException, IOException {
+		administracijaVozila.obrisiSve();
+		System.out.println("========Obrisi sve=========");
+	}
 	private static void prikaziOpcije() { // rad sa app iz konzole
 		System.out.println("--------------------------------------------------");
 		System.out.println("0 -> Izlistaj vozila");
@@ -113,6 +119,7 @@ public class AppConsole {
 		System.out.println("3 -> Izlistaj sve vlasnike");
 		System.out.println("4 -> Izlistaj vlasnike svih aktivnih vozila");
 		System.out.println("5 -> Izlistaj vozila svih vlasnika cije ime sadrzi slovo A");
+		System.out.println("6 -> Obrisi sve");
 		System.out.println("kraj -> izlaz iz aplikacije");
 		System.out.println("--------------------------------------------------");
 	}

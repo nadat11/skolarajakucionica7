@@ -80,6 +80,8 @@ public class AdministriranjeVozila {
 			Vlasnik zadnjiVlasnik = zadnjeVozilo.getVlasnik();
 			Vlasnik ucitaniVlasnik = vlasnikDAO.read(zadnjiVlasnik.getBrojVozackeDozvole());
 			
+			Vozilo nekoVozilo = voziloDAO.read(ucitaniVlasnik.getVozilo().getRegistarskiBroj());
+			
 			System.out.println(zadnjiVlasnik.getBrojVozackeDozvole() + "======" + zadnjiVlasnik.getPrezime()+"-------"+ucitaniVlasnik.getPrezime());
 			
 			vozila = voziloDAO.getAll();
@@ -115,9 +117,21 @@ public class AdministriranjeVozila {
 	public List<Vozilo> dajSvaVozilaCijeImeVlasnikaSadrziSlovoA() throws ResultNotFoundException {
 		return voziloDAO.getAllVozilaCijeImeVlasnikaSadrziSlovoA();
 	}
+	
+	// u servisu mogu da se iskombinuju dva ili vise DAO-a da obavljamo neke operacije za rad sa dve ili vise tabela
+	public void obrisiSve() throws ResultNotFoundException {  //brisanje svih podataka za vlasnika i vozilo
+		for(Vozilo vozilo : voziloDAO.getAll()) {
+			voziloDAO.delete(vozilo.getRegistarskiBroj()); 
+		}
+	
+		for(Vlasnik vlasnik : vlasnikDAO.getAll()) {
+			vlasnikDAO.delete(vlasnik.getBrojVozackeDozvole());
+		}
+	}
+	
 	public int dodeliGodinuProizvodnje() {
 		int godina = RandomUtils.slucajanBrojUIntervalu(Konstante.MIN_VOZILO_GODISTE, Konstante.MAX_VOZILO_GODISTE);
 		return godina;
 	}
-
+	
 }
