@@ -31,7 +31,7 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 			Connection conn = getConnection(); // otvara konekciju za bazu sa username i pass
 
 			// the mysql insert statement
-			String query = " insert into vlasnik (brojVozackeDozvole, ime, prezime)" + " values (?, ?, ?, ?)"; // insert
+			String query = " insert into vlasnik (brojVozackeDozvole, ime, prezime)" + " values (?, ?, ?)"; // insert
 																												// sql
 																												// comande
 																												// bez
