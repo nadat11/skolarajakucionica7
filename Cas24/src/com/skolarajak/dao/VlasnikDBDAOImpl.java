@@ -49,7 +49,7 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 			System.err.println(e.getMessage());
 		}
 		return vlasnik;
-	}
+	};
 
 	@Override
 	public Vlasnik read(String brojVozackeDozvole) throws ResultNotFoundException {
@@ -60,7 +60,7 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 			Connection conn = getConnection(); // otvara konekciju za bazu sa username i pass
 
 			// the mysql insert statement
-			String query = " select * from vlasnik where brojVozackeDozvole=?"
+			String query = " select * from vlasnik, vozilo where brojVozackeDozvole=?"
 					+"and vlasnik.brojVozackeDozvole=vozilo.vlasnikId"; // veza vlasnika i vozila
 		
 			PreparedStatement preparedStmt = conn.prepareStatement(query); 
@@ -74,7 +74,7 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 				vlasnik.setIme(rs.getString("ime")); // text je naziv kolone
 				vlasnik.setPrezime(rs.getString("prezime"));
 				
-				vozilo.setRegistarskiBroj(rs.getString("regbroj"));
+				vozilo.setRegistarskiBroj(rs.getString("registarskiBroj"));
 				vozilo.setGodisteProizvodnje(rs.getInt("godisteProizvodnje"));
 				vozilo.setAktivno(rs.getBoolean("status"));
 				vozilo.setVlasnik(vlasnik);//uvezano vozilo sa vlasnikom 
@@ -84,13 +84,12 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 			rs.close(); // sve sto smo otvorili zatvaramo resultset, preparestatment, connection
 			preparedStmt.close();
 			conn.close(); // zatvori konekciju
-		} catch (Exception e) { // ako ima greska
+		} catch (Throwable t) { // ako ima greska
 			System.err.println("Got an exception!");
-			System.err.println(e.getMessage());
+			System.err.println(t.getMessage());
 		}
 	
 		return vlasnik;
-
 	};
 
 	@Override
