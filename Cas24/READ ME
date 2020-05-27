@@ -1,0 +1,9 @@
+VERZIJA 1.0
+
+-dodata BP
+-dodat connection pool
+-brisanje svih slogova
+
+VERZIJA 0.9
+-rad sa file systemom
+-redizajn konzole
