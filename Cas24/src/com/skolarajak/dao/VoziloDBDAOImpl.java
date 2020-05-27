@@ -8,11 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.skolarajak.dao.datasource.C3poDataSource;
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vlasnik;
 import com.skolarajak.model.Vozilo;
 import com.skolarajak.utils.DBUtils;
 import com.skolarajak.utils.Konstante;
+import com.skolarajak.utils.SysUtils;
 
 public class VoziloDBDAOImpl implements VoziloDAO {
 	public VoziloDBDAOImpl() throws ClassNotFoundException {
@@ -326,10 +328,10 @@ public class VoziloDBDAOImpl implements VoziloDAO {
 		List<Vozilo> vozila = new ArrayList<Vozilo>();
 		
 		try {
-
+			long startTime = System.nanoTime();
 			Connection conn = getConnection(); // otvara konekciju za bazu sa username i pass
- 
-			
+			SysUtils.printDuration(startTime);
+		
 			//za obavljanje transakcija se koriste rollback, commit na nivou konekcije
 			//con.setAutoCommit(false); con.commit(); con.rollback()
 			
@@ -374,7 +376,7 @@ public class VoziloDBDAOImpl implements VoziloDAO {
 	}
 	
 	private Connection getConnection() throws ClassNotFoundException, SQLException {
-
-		return DriverManager.getConnection(DBUtils.myUrl, "root", "test");
+		return C3poDataSource.getConnection();
+		//return DriverManager.getConnection(DBUtils.myUrl, "root", "test");
 	}
 }
