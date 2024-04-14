@@ -1,5 +1,5 @@
-#Java Java Web Development
+# Java Web Development
 
-School Rajak - 2019
+## School Rajak - 2019
 
-[Nada_Tandaric_java.pdf](https://github.com/nadat11/skolarajakucionica7/files/14970426/Nada_Tandaric_java.pdf)
++ [x] Основе програмског језика јава 
